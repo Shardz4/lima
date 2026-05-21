@@ -113,6 +113,9 @@ func TestFillDefault(t *testing.T) {
 			RemoveDefaults: ptr.Of(false),
 		},
 		NestedVirtualization: ptr.Of(false),
+		TPM: limatype.TPM{
+			Enabled: ptr.Of(false),
+		},
 		Plain:                ptr.Of(false),
 		User: limatype.User{
 			Name:    ptr.Of(user.Username),
@@ -412,6 +415,9 @@ func TestFillDefault(t *testing.T) {
 			},
 		},
 		NestedVirtualization: ptr.Of(true),
+		TPM: limatype.TPM{
+			Enabled: ptr.Of(true),
+		},
 		User: limatype.User{
 			Name:    ptr.Of("xxx"),
 			Comment: ptr.Of("Foo Bar"),
@@ -638,6 +644,9 @@ func TestFillDefault(t *testing.T) {
 			RemoveDefaults: ptr.Of(true),
 		},
 		NestedVirtualization: ptr.Of(false),
+		TPM: limatype.TPM{
+			Enabled: ptr.Of(false),
+		},
 		User: limatype.User{
 			Name:    ptr.Of("foo"),
 			Comment: ptr.Of("foo bar baz"),
@@ -706,6 +715,8 @@ func TestFillDefault(t *testing.T) {
 	expect.Plain = ptr.Of(false)
 
 	expect.NestedVirtualization = ptr.Of(false)
+
+	expect.TPM.Enabled = ptr.Of(false)
 
 	expect.VMOpts = limatype.VMOpts{
 		"qemu": dExpected.VMOpts["qemu"],
