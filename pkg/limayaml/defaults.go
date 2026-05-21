@@ -694,10 +694,10 @@ func FillDefault(ctx context.Context, y, d, o *limatype.LimaYAML, filePath strin
 		if mount.MountPoint == nil {
 			mountLocation := mount.Location
 			if runtime.GOOS == "windows" {
-				var err error
-				mountLocation, err = ioutilx.WindowsSubsystemPath(ctx, mountLocation)
-				if err != nil {
+				if wPath, err := ioutilx.WindowsSubsystemPath(ctx, mountLocation); err != nil {
 					logrus.WithError(err).Warnf("Couldn't convert location %q into mount target", mount.Location)
+				} else {
+					mountLocation = wPath
 				}
 			}
 			mount.MountPoint = ptr.Of(mountLocation)
@@ -825,6 +825,16 @@ func FillDefault(ctx context.Context, y, d, o *limatype.LimaYAML, filePath strin
 	}
 	if y.NestedVirtualization == nil {
 		y.NestedVirtualization = ptr.Of(false)
+	}
+
+	if y.TPM.Enabled == nil {
+		y.TPM.Enabled = d.TPM.Enabled
+	}
+	if o.TPM.Enabled != nil {
+		y.TPM.Enabled = o.TPM.Enabled
+	}
+	if y.TPM.Enabled == nil {
+		y.TPM.Enabled = ptr.Of(false)
 	}
 
 	if y.Plain == nil {

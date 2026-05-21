@@ -77,6 +77,9 @@ const (
 	MntDir    = "mnt" // mount point (macOS guests only)
 
 	Protected = "protected" // empty file; used by `limactl protect`
+
+	SwtpmSock = "swtpm.sock" // swtpm socket for QEMU chardev
+	SwtpmDir  = "tpm"        // directory for swtpm state files
 )
 
 // Filenames used under a disk directory

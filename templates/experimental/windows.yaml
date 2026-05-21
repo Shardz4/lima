@@ -1,0 +1,36 @@
+# Experimental: Windows guest VM
+# Requires: swtpm, Windows ISO image, QEMU with UEFI support
+# See: https://github.com/lima-vm/lima/issues/4852
+#
+# Usage:
+#   1. Download a Windows ISO (e.g. from https://www.microsoft.com/software-download/windows11)
+#   2. Create an instance with the ISO path:
+#      limactl create --name=windows --vm-type=qemu template://experimental/windows
+#   3. Edit the instance YAML to set the image location to your ISO path
+#
+# NOTE: This template requires the user to provide a Windows ISO.
+# The 'images' field is intentionally left empty; set it before starting.
+
+minimumLimaVersion: "2.2.0"
+
+# Users must provide their own Windows ISO by adding an entry like:
+# images:
+# - location: "/path/to/Win11.iso"
+#   arch: x86_64
+images: []
+
+os: Linux  # TODO: Change to Windows when OS type is added
+vmType: qemu
+
+cpus: 4
+memory: 4GiB
+disk: 64GiB
+
+firmware:
+  legacyBIOS: false  # UEFI required for Windows 11
+
+tpm:
+  enabled: true  # Required for Windows 11
+
+video:
+  display: "vnc"  # Needed for Windows installer UI
